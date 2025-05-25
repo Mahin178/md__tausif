@@ -1,0 +1,614 @@
+/* Futuristic & Techy Portfolio Styles */
+
+:root {
+  --bg-dark: #0a0f1f; /* Darker, bluer dark */
+  --bg-light: #e8efff; /* Light, slightly blueish white */
+  --accent: #00f7ff; /* Cyan accent */
+  --accent-secondary: #7f00ff; /* Purple accent */
+  --text-dark: #1a1a2e; /* Dark text for light mode */
+  --text-light: #e0e0ff; /* Light text for dark mode */
+  --font-body: 'Roboto Mono', monospace;
+  --font-headings: 'Orbitron', sans-serif; /* Futuristic heading font */
+  --card-bg-dark: rgba(20, 30, 50, 0.7); /* Translucent card bg */
+  --card-border-dark: rgba(0, 247, 255, 0.5);
+  --card-bg-light: rgba(255, 255, 255, 0.8);
+  --card-border-light: rgba(0, 150, 255, 0.6);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body); /* Default to body font */
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  transition: background-color 0.5s ease, color 0.5s ease;
+  overflow-x: hidden;
+  position: relative; /* For pseudo-elements */
+}
+
+body.light {
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  /* Override accent colors for light mode canvas animation */
+  --accent: #007bff; /* A more standard blue for light mode particles */
+  --accent-secondary: #5856d6; /* A deep purple for light mode traces */
+  --card-border-dark: rgba(0, 123, 255, 0.6); /* Adjusted for new light accent */
+}
+
+/* Grid overlay effect */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at center, rgba(0, 247, 255, 0.08) 0%, transparent 50%),
+    repeating-linear-gradient(90deg, rgba(0, 247, 255, 0.03) 0px, rgba(0, 247, 255, 0.03) 1px, transparent 1px, transparent 50px),
+    repeating-linear-gradient(0deg, rgba(0, 247, 255, 0.03) 0px, rgba(0, 247, 255, 0.03) 1px, transparent 1px, transparent 50px);
+  pointer-events: none;
+  z-index: 0;
+  animation: gridFlicker 5s infinite alternate ease-in-out;
+}
+
+@keyframes gridFlicker {
+  0% { opacity: 0.5; }
+  100% { opacity: 0.8; }
+}
+
+/* Animated background canvas (styled here, rendered by script.js) */
+#bgCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1; /* Behind grid overlay */
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2.5rem;
+  background-color: rgba(10, 15, 30, 0.8); /* Darker, more translucent */
+  border-bottom: 1px solid var(--accent-secondary);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(8px); /* Glassmorphism */
+}
+
+#logo{
+  height: 32px;
+  width: 103px;
+  object-fit: cover;
+}
+
+header h1 {
+  font-family: var(--font-headings); /* Use heading font */
+  font-size: 1.8rem; /* Larger */
+  color: var(--accent);
+  text-shadow: 0 0 8px var(--accent);
+  animation: slideDown 0.8s ease-out forwards;
+}
+
+nav a {
+  color: var(--text-light);
+  text-decoration: none;
+  margin-left: 1.8rem;
+  font-weight: 500; /* Normal bold */
+  font-size: 1rem;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -5px;
+  left: 0;
+  background-color: var(--accent);
+  transition: width 0.3s ease;
+}
+
+nav a:hover {
+  color: var(--accent);
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+body.light nav a {
+  color: var(--text-dark);
+}
+body.light nav a:hover {
+  color: var(--accent-secondary);
+}
+body.light nav a:hover::after {
+  background-color: var(--accent-secondary);
+}
+
+
+.toggle-mode {
+  background: none;
+  color: var(--text-light);
+  border: 1px solid var(--accent);
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: var(--font-body); /* Keep button text readable */
+  font-size: 0.9rem;
+  margin-left: 1.8rem;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.toggle-mode:hover {
+  background-color: var(--accent);
+  color: var(--bg-dark);
+  box-shadow: 0 0 10px var(--accent);
+}
+
+body.light .toggle-mode {
+  color: var(--text-dark);
+  border-color: var(--accent-secondary);
+}
+
+body.light .toggle-mode:hover {
+  background-color: var(--accent-secondary);
+  color: var(--bg-light);
+  box-shadow: 0 0 10px var(--accent-secondary);
+}
+
+.container {
+  max-width: 1200px; /* Wider */
+  margin: 0 auto;
+  padding: 4rem 2rem; /* More padding */
+  position: relative;
+  z-index: 1;
+}
+
+.hero {
+  display: flex;
+  flex-direction: row; /* Changed to row for side-by-side layout */
+  align-items: center;
+  text-align: left; /* Align text to left for hero content */
+  padding: 6rem 2rem; /* Adjusted padding */
+  min-height: 70vh;
+  justify-content: space-around; /* Space out content and image */
+  gap: 2rem; /* Add gap between text and image */
+}
+
+.hero-content {
+  flex-basis: 60%; /* Give more space to text content */
+  animation: slideDown 1s ease-out 0.2s forwards; /* Re-apply animation here */
+}
+
+.profile-pic-container {
+  flex-basis: 35%; /* Space for profile picture */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: zoomIn 1s ease-out 0.5s forwards; /* Animation for profile pic */
+}
+
+#profile-pic {
+  width: 220px; /* Adjust as needed */
+  height: 220px; /* Adjust as needed */
+  border-radius: 50%;
+  border: 4px solid var(--accent);
+  box-shadow: 0 0 20px var(--accent), 0 0 30px var(--accent-secondary);
+  object-fit: cover;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+#profile-pic:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px var(--accent), 0 0 45px var(--accent-secondary);
+}
+
+
+body.light #profile-pic {
+  border-color: var(--accent-secondary);
+  box-shadow: 0 0 20px var(--accent-secondary), 0 0 30px var(--accent);
+}
+
+body.light #profile-pic:hover {
+  box-shadow: 0 0 30px var(--accent-secondary), 0 0 45px var(--accent);
+}
+
+
+.hero h2 {
+  font-family: var(--font-headings); /* Use heading font */
+  font-size: 3rem; /* Larger */
+  margin-bottom: 1.5rem;
+  color: var(--text-light);
+  /* animation: slideDown 1s ease-out 0.2s forwards; */ /* Moved to .hero-content */
+}
+body.light .hero h2 { color: var(--text-dark); }
+
+.hero-content h2 span#typed-name {
+  color: var(--accent); /* Will use the overridden --accent in light mode */
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 0.15em solid var(--accent); /* Caret color from accent */
+  animation:
+    typing-effect 2.5s steps(11, end) forwards, /* Slower, fewer steps for clarity */
+    blink-caret 0.8s step-end infinite;
+  vertical-align: bottom; /* Or text-bottom, depending on font */
+  letter-spacing: 0.05em;
+  /* Ensure it uses the correct accent color based on theme */
+}
+
+/* Typing effect */
+@keyframes typing-effect {
+  from { width: 0; }
+  to { width: 6.5em; } /* Approximate width for "MD Tausif" - adjust if name changes */
+}
+
+/* Blinking caret */
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: var(--accent); } /* Caret color from accent */
+}
+
+/* Ensure the caret color also updates in light mode */
+body.light .hero-content h2 span#typed-name {
+  border-right-color: var(--accent); /* Uses the light mode --accent */
+}
+/* The global @keyframes blink-caret will use the --accent value from body.light context,
+   so a separate @keyframes declaration under body.light is not needed and incorrect. */
+
+
+.hero p {
+  font-size: 1.3rem; /* Larger */
+  max-width: 700px; /* Wider */
+  line-height: 1.7;
+  color: var(--text-light-secondary, #c0c0f0);
+  /* animation: fadeInUp 1s ease-out 0.5s forwards; */ /* Moved to .hero-content, or apply individually */
+}
+.hero-content p { /* Apply animation to p within hero-content */
+  animation: fadeInUp 1s ease-out 0.7s forwards;
+}
+body.light .hero p { color: var(--text-dark-secondary, #505070); }
+
+/* Adjust hero for smaller screens */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column; /* Stack on smaller screens */
+    text-align: center; /* Center text again */
+    padding: 4rem 1rem;
+  }
+  .hero-content {
+    text-align: center;
+    margin-bottom: 2rem; /* Add space below text */
+  }
+  .profile-pic-container {
+    margin-bottom: 2rem; /* Space below image */
+  }
+  #profile-pic {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+
+section {
+  margin-top: 5rem; /* More spacing */
+  padding-top: 2rem; /* Spacing for heading */
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+h3 { /* Section headings */
+  font-family: var(--font-headings); /* Use heading font */
+  margin-bottom: 2.5rem; /* More spacing */
+  font-size: 2.2rem; /* Larger */
+  color: var(--accent);
+  text-align: center;
+  text-shadow: 0 0 5px rgba(0, 247, 255, 0.7);
+}
+body.light h3 {
+    color: var(--accent-secondary);
+    text-shadow: 0 0 5px rgba(127, 0, 255, 0.5);
+}
+
+.card {
+  background: var(--card-bg-dark);
+  padding: 2rem; /* More padding */
+  border: 1px solid var(--card-border-dark);
+  border-radius: 15px; /* More rounded */
+  margin-bottom: 2rem;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3), 0 0 15px var(--accent-secondary) inset;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother transition */
+  overflow: hidden; /* For potential inner effects */
+  perspective: 1000px; /* Add perspective for 3D effects */
+}
+.card:hover {
+    transform: translateY(-10px) scale(1.02); /* Default hover */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 25px var(--accent) inset;
+}
+
+/* Specific animation for project cards */
+.project-card { /* Use the class added to the card div */
+  position: relative; /* Needed for pseudo-elements and overlay */
+  padding: 0; /* Remove padding from card if link takes over */
+}
+
+.project-link {
+  display: block; /* Make link fill the card */
+  padding: 2rem; /* Add padding to the link instead of the card */
+  text-decoration: none;
+  color: inherit; /* Inherit text color from parent */
+  height: 100%; /* Ensure link fills card height */
+  position: relative; /* For z-indexing if needed */
+  z-index: 1; /* Ensure content is above overlay */
+}
+
+
+.project-card .click-to-see {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: var(--accent);
+  color: var(--bg-dark);
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 2; /* Above link content but below card hover effects if any */
+}
+
+.project-card:hover .click-to-see {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+body.light .project-card .click-to-see {
+  background-color: var(--accent-secondary); /* Use light mode accent */
+  color: var(--bg-light);
+}
+
+
+#projects .card:hover { /* This is the .project-card now */
+  transform: translateY(-12px) scale(1.03) rotateX(5deg) rotateY(-3deg); /* Subtle 3D tilt */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 30px var(--accent) inset, 0 0 15px var(--accent); /* Enhanced shadow */
+}
+
+
+body.light .card {
+  background: var(--card-bg-light);
+  border-color: var(--card-border-light);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1), 0 0 10px var(--accent-secondary) inset;
+}
+body.light .card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 20px var(--accent-secondary) inset;
+}
+
+
+.skills-grid, .projects-grid { /* Renamed for clarity from .skills, .projects */
+  display: grid;
+  gap: 2rem; /* More gap */
+}
+
+#skills .card { /* Specific styling for skill cards */
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  /* Removed pulseGlow animation */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; /* Added border-color transition */
+}
+
+#skills .card:hover {
+  transform: translateY(-5px) scale(1.03); /* More subtle hover transform */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 20px var(--accent) inset;
+  border-color: var(--accent); /* Highlight border on hover */
+}
+
+body.light #skills .card:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1), 0 0 20px var(--accent-secondary) inset;
+  border-color: var(--accent-secondary);
+}
+
+
+.project-card { /* Targeting the div with class project-card */
+  border-left: 5px solid var(--accent);
+}
+
+/* Ensure the strong and p inside the link are styled correctly */
+.project-link strong {
+    display: block;
+    font-size: 1.4rem;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+}
+body.light .project-link strong { color: var(--accent-secondary); }
+
+.project-link p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2.5rem; /* Add margin to prevent overlap with "click to see" */
+}
+
+
+.chat-ui.card {
+  backdrop-filter: blur(10px);
+  animation: zoomIn 0.7s ease-out forwards;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  background: rgba(10, 20, 40, 0.85); /* Darker, specific for chat */
+}
+.chat-ui p {
+  padding: 0.8rem 1rem;
+  margin: 0.8rem 0;
+  border-radius: 8px;
+  line-height: 1.6;
+  font-size: 1.05rem;
+}
+.chat-ui p:first-child { background: rgba(0, 247, 255, 0.1); border-left: 3px solid var(--accent); }
+.chat-ui p:last-child { background: rgba(127, 0, 255, 0.1); text-align: right; border-right: 3px solid var(--accent-secondary); }
+.chat-ui p strong {
+  font-weight: 600;
+}
+.chat-ui p:first-child strong { color: var(--accent); }
+.chat-ui p:last-child strong { color: var(--accent-secondary); }
+
+
+#contact form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: var(--card-bg-dark);
+  padding: 2.5rem;
+  border-radius: 15px;
+  border: 1px solid var(--card-border-dark);
+  box-shadow: 0 0 20px rgba(0, 247, 255, 0.2);
+}
+body.light #contact form {
+    background: var(--card-bg-light);
+    border-color: var(--card-border-light);
+    box-shadow: 0 0 20px rgba(127, 0, 255, 0.15);
+}
+
+form input, form textarea {
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 0; /* Gap handles spacing */
+  background: rgba(0,0,0,0.2);
+  border: 1px solid var(--accent-secondary);
+  color: var(--text-light);
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+form input:focus, form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+}
+body.light form input, body.light form textarea {
+    background: rgba(255,255,255,0.5);
+    color: var(--text-dark);
+    border-color: var(--accent);
+}
+body.light form input:focus, body.light form textarea:focus {
+    border-color: var(--accent-secondary);
+    box-shadow: 0 0 10px var(--accent-secondary);
+}
+
+
+.btn {
+  background: var(--accent);
+  color: var(--bg-dark);
+  padding: 0.9rem 1.8rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 600; /* Bolder */
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  transition: transform 0.3s ease, background-color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 0 8px rgba(0, 247, 255, 0.5);
+}
+.btn:hover {
+  transform: scale(1.05) translateY(-3px);
+  background-color: var(--accent-secondary);
+  color: var(--text-light);
+  box-shadow: 0 0 15px var(--accent-secondary), 0 5px 10px rgba(0,0,0,0.3);
+}
+body.light .btn {
+    background: var(--accent-secondary);
+    color: var(--bg-light);
+    box-shadow: 0 0 8px rgba(127, 0, 255, 0.5);
+}
+body.light .btn:hover {
+    background: var(--accent);
+    color: var(--bg-dark);
+    box-shadow: 0 0 15px var(--accent), 0 5px 10px rgba(0,0,0,0.2);
+}
+
+
+footer {
+  text-align: center;
+  padding: 3rem 1rem;
+  font-size: 0.95rem;
+  color: #888ea2; /* Muted techy color */
+  border-top: 1px solid rgba(127, 0, 255, 0.2); /* Subtle separator */
+  margin-top: 4rem;
+}
+body.light footer { color: #505070; border-top-color: rgba(0, 247, 255, 0.2); }
+
+
+/* Media Queries */
+@media (min-width: 768px) {
+  .skills-grid, .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  header { padding: 1.5rem 3rem; }
+  nav a { margin-left: 2.5rem; }
+  .toggle-mode { margin-left: 2.5rem; }
+}
+
+@media (min-width: 1024px) {
+  .skills-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 skills per row on larger screens */
+  }
+  .hero h2 { font-size: 3.8rem; }
+  .hero p { font-size: 1.5rem; }
+  h3 { font-size: 2.5rem; }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Fallback for no JS or canvas not found */
+body:not(:has(#bgCanvas:not([style*="display: none"]))) {
+    /* Add a static fallback background if canvas fails */
+    background-image: linear-gradient(45deg, var(--bg-dark) 0%, #050810 100%);
+}
+body.light:not(:has(#bgCanvas:not([style*="display: none"]))) {
+    background-image: linear-gradient(45deg, var(--bg-light) 0%, #d0d8ea 100%);
+}
+
+/* Utility for screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
