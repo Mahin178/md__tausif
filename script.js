@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let traceColor = computedStyles.getPropertyValue('--accent-secondary').trim() || '#7f00ff';
   let nodeColor = computedStyles.getPropertyValue('--accent').trim() || '#00f7ff';
 
-  const nodeCount = 20; // Can adjust for density
+  const nodeCount = 80; // Can adjust for density
   const nodes = [];
   const particles = [];
   const particleCount = 200; // Increased for intensity
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       this.x = sourceNode.x;
       this.y = sourceNode.y;
-      this.speed = Math.random() * 2.5 + 1.0; // "Intense" - faster particles
+      this.speed = Math.random() * 2.5 + 1.3; // "Intense" - faster particles
       this.radius = Math.random() * 1.2 + 0.8; // "More little" particles
       this.trail = [];
       this.trailLength = 5 + Math.random() * 8; // Shorter, more "intense" trails
