@@ -34,9 +34,12 @@ body.light {
   background-color: var(--bg-light);
   color: var(--text-dark);
   /* Override accent colors for light mode canvas animation */
-  --accent: #007bff; /* A more standard blue for light mode particles */
-  --accent-secondary: #5856d6; /* A deep purple for light mode traces */
-  --card-border-dark: rgba(0, 123, 255, 0.6); /* Adjusted for new light accent */
+  --accent: #0056b3; /* Darker blue for better contrast on light bg */
+  --accent-secondary: #483D8B; /* Darker purple for light bg */
+  --card-border-dark: rgba(0, 86, 179, 0.6);
+  --header-bg-light: rgba(230, 235, 245, 0.92); /* Slightly more opaque for light mode header */
+  --nav-link-light: #12181f; /* Even darker nav links for light mode */
+  --nav-link-hover-light: #004080; /* Slightly darker hover for light accent */
 }
 
 /* Grid overlay effect */
@@ -75,8 +78,8 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2.5rem;
-  background-color: rgba(10, 15, 30, 0.8); /* Darker, more translucent */
+  padding: 1rem 1.5rem;
+  background-color: rgba(10, 15, 30, 0.9); /* Slightly more opaque for dark mode header */
   border-bottom: 1px solid var(--accent-secondary);
   position: sticky;
   top: 0;
@@ -98,7 +101,12 @@ header h1 {
   animation: slideDown 0.8s ease-out forwards;
 }
 
-nav a {
+.main-nav {
+  display: flex;
+  align-items: center;
+}
+
+.main-nav a {
   color: var(--text-light);
   text-decoration: none;
   margin-left: 1.8rem;
@@ -108,7 +116,7 @@ nav a {
   transition: color 0.3s ease;
 }
 
-nav a::after {
+.main-nav a::after {
   content: '';
   position: absolute;
   width: 0;
@@ -119,22 +127,27 @@ nav a::after {
   transition: width 0.3s ease;
 }
 
-nav a:hover {
+.main-nav a:hover {
   color: var(--accent);
 }
 
-nav a:hover::after {
+.main-nav a:hover::after {
   width: 100%;
 }
 
-body.light nav a {
-  color: var(--text-dark);
+body.light .main-nav a {
+  color: var(--nav-link-light);
 }
-body.light nav a:hover {
-  color: var(--accent-secondary);
+body.light .main-nav a:hover {
+  color: var(--nav-link-hover-light);
 }
-body.light nav a:hover::after {
-  background-color: var(--accent-secondary);
+body.light .main-nav a:hover::after {
+  background-color: var(--nav-link-hover-light);
+}
+
+body.light header {
+  background-color: var(--header-bg-light);
+  border-bottom-color: var(--accent); /* Use the overridden --accent for light mode */
 }
 
 
@@ -158,14 +171,14 @@ body.light nav a:hover::after {
 }
 
 body.light .toggle-mode {
-  color: var(--text-dark);
-  border-color: var(--accent-secondary);
+  color: var(--nav-link-light); /* Match nav link color */
+  border-color: var(--accent);  /* Use new light-mode accent */
 }
 
 body.light .toggle-mode:hover {
-  background-color: var(--accent-secondary);
-  color: var(--bg-light);
-  box-shadow: 0 0 10px var(--accent-secondary);
+  background-color: var(--accent);
+  color: var(--bg-light); /* Text color on hover */
+  box-shadow: 0 0 10px var(--accent);
 }
 
 .container {
@@ -267,11 +280,81 @@ body.light .hero-content h2 span#typed-name {
 }
 /* The global @keyframes blink-caret will use the --accent value from body.light context,
    so a separate @keyframes declaration under body.light is not needed and incorrect. */
+/*skills droping effect start*/
+.dropping-container {
+  font-weight: normal;
+  text-align: left;
+  color: var(--text-light);
+  font-family: var(--font-body);
+  font-size: 1.3rem;
+  overflow: hidden; /* Changed back to hidden for cleaner effect */
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  height: 1.5em;
+  line-height: 1.5em;
+  position: relative;
+}
+body.light .dropping-container {
+  color: var(--text-dark);
+}
 
+.dropping-texts {
+  display: inline-block;
+  font-family: var(--font-headings);
+  text-align: left;
+  height: 100%;
+  vertical-align: top; /* Ensure proper alignment */
+  position: relative;
+  margin-left: 0.5em;
+}
 
+.dropping-texts > div {
+  font-size: 1.3rem;
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: 500;
+  color: var(--accent);
+  white-space: nowrap;
+  transform-origin: center center;
+}
+body.light .dropping-texts > div {
+  color: var(--accent);
+}
+
+.dropping-texts > div:nth-child(1) {
+  animation: roll-alt 10s linear infinite 0s;
+}
+.dropping-texts > div:nth-child(2) {
+  animation: roll-alt 10s linear infinite 2.5s;
+}
+.dropping-texts > div:nth-child(3) {
+  animation: roll-alt 10s linear infinite 5s;
+}
+.dropping-texts > div:nth-child(4) {
+  animation: roll-alt 10s linear infinite 7.5s;
+}
+
+@keyframes roll-alt {
+  0% {
+    opacity: 0;
+    transform: translateY(-120%) rotateX(-80deg); /* Adjusted start */
+  }
+  6%, 22% { /* Adjusted timing for appearance and stay */
+    opacity: 1;
+    transform: translateY(0%) rotateX(0deg);
+  }
+  28%, 100% { /* Adjusted timing for disappearance */
+    opacity: 0;
+    transform: translateY(120%) rotateX(80deg); /* Adjusted end */
+  }
+}
+
+/*skills droping effect end*/
 .hero p {
-  font-size: 1.3rem; /* Larger */
-  max-width: 700px; /* Wider */
+  font-size: 1.3rem;
+  max-width: 700px;
   line-height: 1.7;
   color: var(--text-light-secondary, #c0c0f0);
   /* animation: fadeInUp 1s ease-out 0.5s forwards; */ /* Moved to .hero-content, or apply individually */
@@ -290,14 +373,24 @@ body.light .hero p { color: var(--text-dark-secondary, #505070); }
   }
   .hero-content {
     text-align: center;
-    margin-bottom: 2rem; /* Add space below text */
+    margin-bottom: 2rem;
   }
   .profile-pic-container {
-    margin-bottom: 2rem; /* Space below image */
+    margin-bottom: 2rem;
   }
   #profile-pic {
     width: 150px;
     height: 150px;
+  }
+  .dropping-container {
+    font-size: 1.1rem;
+    text-align: center;
+    margin-left: 0;
+    height: 1.5em;
+    line-height: 1.5em;
+  }
+  .dropping-texts > div {
+    font-size: 1.1rem;
   }
 }
 

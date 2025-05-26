@@ -15,8 +15,13 @@
   <canvas id="bgCanvas"></canvas>
 
   <header>
-    <img id="logo" src="logo.png" alt="">
-    <nav>
+    <img id="logo" src="logo.png" alt="Logo">
+    <button class="hamburger-menu" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav class="main-nav">
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
       <a href="#skills">Skills</a>
@@ -32,6 +37,14 @@
     <section class="hero">
       <div class="hero-content">
         <h2>Hi, I'm <span id="typed-name">MD Tausif</span></h2>
+        <div class="dropping-container">I am an expert in 
+          <div class="dropping-texts">
+            <div>HTML</div>
+            <div>CSS</div>
+            <div>JAVA SCRIPT</div>
+            <div>PYTHON</div>
+          </div>
+        </div>
         <p>Crafting the next generation of AI assistants and immersive digital experiences. Welcome to my innovation lab!</p>
       </div>
       <div class="profile-pic-container">
